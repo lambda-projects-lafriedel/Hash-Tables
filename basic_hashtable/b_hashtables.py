@@ -15,16 +15,21 @@ class Pair:
 # '''
 class BasicHashTable:
     def __init__(self, capacity):
-        pass
+        self.capacity = capacity
+        self.storage = [None] * capacity
 
 
 # '''
 # Fill this in.
 # Research and implement the djb2 hash function
+
 # '''
 def hash(string, max):
-    pass
-
+    # not sure how/why to incorporate "max"
+    num = 5381
+    for char in string:
+        num = ((num << 5) + num) + ord(char)
+    return num & 0xFFFFFFFF
 
 # '''
 # Fill this in.
@@ -33,6 +38,8 @@ def hash(string, max):
 # '''
 def hash_table_insert(hash_table, key, value):
     pass
+    # hash the passed in key
+
 
 
 # '''
