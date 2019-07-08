@@ -8,7 +8,7 @@ class Pair:
         self.key = key
         self.value = value
     def __str__(self):
-        print(f"{self.key}, {self.value}")
+        print(f"{self.value}")
 
 # '''
 # Basic hash table
@@ -46,7 +46,7 @@ def hash_table_insert(hash_table, key, value):
     # hash the passed in value to get index value
     index = hash(key, hash_table.capacity) % hash_table.capacity
     print("INDEX", index)
-    # feed k/v into Pair?
+    # feed k/v into Pair? -- not sure how to utilize this
     pair = Pair(index, value)
 
     # if key already has a value, print a warning
@@ -54,7 +54,7 @@ def hash_table_insert(hash_table, key, value):
         print("WARNING: Value will be overridden!")
 
     # insert value at given index
-    hash_table.storage[index] = pair
+    hash_table.storage[index] = value
 
     # for i in range(len(hash_table.storage)):
     #     print(hash_table.storage[i])
