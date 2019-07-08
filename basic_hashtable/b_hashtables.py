@@ -8,7 +8,7 @@ class Pair:
         self.key = key
         self.value = value
     def __str__(self):
-        print(f"{self.value}")
+        return f"{self.key}, {self.value}"
 
 # '''
 # Basic hash table
@@ -27,6 +27,7 @@ class BasicHashTable:
 # '''
 def hash(string, max):
     # not sure how/why to incorporate "max"
+    print("MAX", max)
     num = 5381
     for char in string:
         num = (num * 33) + ord(char)
@@ -48,16 +49,18 @@ def hash_table_insert(hash_table, key, value):
     print("INDEX", index)
     # feed k/v into Pair? -- not sure how to utilize this
     pair = Pair(index, value)
+    print("PAIR", pair)
 
     # if key already has a value, print a warning
-    if hash_table.storage[index] is not None:
+    if hash_table.storage[pair.key] is not None:
         print("WARNING: Value will be overridden!")
 
     # insert value at given index
-    hash_table.storage[index] = value
+    hash_table.storage[pair.key] = pair.value
 
-    # for i in range(len(hash_table.storage)):
-    #     print(hash_table.storage[i])
+    # printing just to see process when running tests
+    for i in range(len(hash_table.storage)):
+        print(hash_table.storage[i])
     
 
 
@@ -77,8 +80,9 @@ def hash_table_remove(hash_table, key):
         # hash_table[key] = None
         hash_table.storage[index] = None
 
-    # for i in range(len(hash_table.storage)):
-    #     print(hash_table.storage[i])
+    # printing just to see process when running tests
+    for i in range(len(hash_table.storage)):
+        print(hash_table.storage[i])
 
 
 # '''
