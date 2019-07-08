@@ -7,7 +7,8 @@ class Pair:
     def __init__(self, key, value):
         self.key = key
         self.value = value
-
+    def __str__(self):
+        print(f"{self.key}, {self.value}")
 
 # '''
 # Basic hash table
@@ -16,7 +17,6 @@ class Pair:
 class BasicHashTable:
     def __init__(self, capacity):
         self.capacity = capacity
-        self.count = 0
         self.storage = [None] * capacity
 
 
@@ -44,7 +44,7 @@ def hash(string, max):
 # '''
 def hash_table_insert(hash_table, key, value):
     # hash the passed in value to get index value
-    index = hash(value, hash_table.capacity) % hash_table.capacity
+    index = hash(key, hash_table.capacity) % hash_table.capacity
     print("INDEX", index)
     # feed k/v into Pair?
     pair = Pair(index, value)
@@ -54,10 +54,10 @@ def hash_table_insert(hash_table, key, value):
         print("WARNING: Value will be overridden!")
 
     # insert value at given index
-    hash_table.storage[pair.key] = pair.value
+    hash_table.storage[index] = pair
 
-    for i in range(len(hash_table.storage)):
-        print(hash_table.storage[i])
+    # for i in range(len(hash_table.storage)):
+    #     print(hash_table.storage[i])
     
 
 
@@ -67,7 +67,18 @@ def hash_table_insert(hash_table, key, value):
 # If you try to remove a value that isn't there, print a warning.
 # '''
 def hash_table_remove(hash_table, key):
-    pass
+    # if key's value is None, print a warning
+    index = hash(key, hash_table.capacity) % hash_table.capacity
+    print("INDEX", index)
+    if hash_table.storage[index] is None:
+        print("WARNING: No value to remove!")
+    # else
+    else:
+        # hash_table[key] = None
+        hash_table.storage[index] = None
+
+    # for i in range(len(hash_table.storage)):
+    #     print(hash_table.storage[i])
 
 
 # '''
@@ -76,7 +87,13 @@ def hash_table_remove(hash_table, key):
 # Should return None if the key is not found.
 # '''
 def hash_table_retrieve(hash_table, key):
-    pass
+    index = hash(key, hash_table.capacity) % hash_table.capacity
+    print("INDEX", index)
+    
+    if hash_table.storage[index] is None:
+        return None
+    else:
+        return hash_table.storage[index]
 
 
 def Testing():
