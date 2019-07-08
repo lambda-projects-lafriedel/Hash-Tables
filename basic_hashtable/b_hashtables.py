@@ -16,6 +16,7 @@ class Pair:
 class BasicHashTable:
     def __init__(self, capacity):
         self.capacity = capacity
+        self.count = 0
         self.storage = [None] * capacity
 
 
@@ -28,8 +29,13 @@ def hash(string, max):
     # not sure how/why to incorporate "max"
     num = 5381
     for char in string:
-        num = ((num << 5) + num) + ord(char)
-    return num & 0xFFFFFFFF
+        num = (num * 33) + ord(char)
+    
+    # if num >= max:
+    #     print("Hashed key is out of range")
+    #     return None
+    # else:
+    return num
 
 # '''
 # Fill this in.
@@ -37,9 +43,22 @@ def hash(string, max):
 # If you are overwriting a value with a different key, print a warning.
 # '''
 def hash_table_insert(hash_table, key, value):
-    pass
-    # hash the passed in key
+    # hash the passed in value to get index value
+    index = hash(value, hash_table.capacity) % hash_table.capacity
+    print("INDEX", index)
+    # feed k/v into Pair?
+    pair = Pair(index, value)
 
+    # if key already has a value, print a warning
+    if hash_table.storage[index] is not None:
+        print("WARNING: Value will be overridden!")
+
+    # insert value at given index
+    hash_table.storage[pair.key] = pair.value
+
+    for i in range(len(hash_table.storage)):
+        print(hash_table.storage[i])
+    
 
 
 # '''
