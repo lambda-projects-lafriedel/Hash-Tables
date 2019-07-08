@@ -36,7 +36,7 @@ def hash(string, max):
     #     print("Hashed key is out of range")
     #     return None
     # else:
-    return num
+    return num % max
 
 # '''
 # Fill this in.
@@ -44,23 +44,25 @@ def hash(string, max):
 # If you are overwriting a value with a different key, print a warning.
 # '''
 def hash_table_insert(hash_table, key, value):
-    # hash the passed in value to get index value
-    index = hash(key, hash_table.capacity) % hash_table.capacity
-    print("INDEX", index)
-    # feed k/v into Pair? -- not sure how to utilize this
+    # hash and modulo the key to get the index
+    index = hash(key, hash_table.capacity)
+    print("INDEX IN INSERT", index)
+
+    # create new Pair from index and value -- not sure how to utilize this properly?
     pair = Pair(index, value)
     print("PAIR", pair)
 
-    # if key already has a value, print a warning
+    # if key already has a value, print a warning -- collision to be dealt with later
     if hash_table.storage[pair.key] is not None:
         print("WARNING: Value will be overridden!")
 
-    # insert value at given index
+    # insert value at given index, even if existing value is not None
     hash_table.storage[pair.key] = pair.value
 
     # printing just to see process when running tests
+    print("STORAGE IN INSERT")
     for i in range(len(hash_table.storage)):
-        print(hash_table.storage[i])
+        print(i, hash_table.storage[i])
     
 
 
@@ -70,19 +72,21 @@ def hash_table_insert(hash_table, key, value):
 # If you try to remove a value that isn't there, print a warning.
 # '''
 def hash_table_remove(hash_table, key):
-    # if key's value is None, print a warning
-    index = hash(key, hash_table.capacity) % hash_table.capacity
-    print("INDEX", index)
+    # hash and modulo the key to get the index
+    index = hash(key, hash_table.capacity)
+    print("INDEX IN REMOVE", index)
+
+    # if the value at the given index is none print warning
     if hash_table.storage[index] is None:
         print("WARNING: No value to remove!")
-    # else
+    # else set the value to None
     else:
-        # hash_table[key] = None
         hash_table.storage[index] = None
 
     # printing just to see process when running tests
+    print("STORAGE IN REMOVE")
     for i in range(len(hash_table.storage)):
-        print(hash_table.storage[i])
+        print(i, hash_table.storage[i])
 
 
 # '''
@@ -91,11 +95,14 @@ def hash_table_remove(hash_table, key):
 # Should return None if the key is not found.
 # '''
 def hash_table_retrieve(hash_table, key):
-    index = hash(key, hash_table.capacity) % hash_table.capacity
-    print("INDEX", index)
+    # hash and modulo the key to get the index
+    index = hash(key, hash_table.capacity)
+    print("INDEX IN RETRIEVE", index)
     
+    # if the value at that index is None return None
     if hash_table.storage[index] is None:
         return None
+    # else return the value
     else:
         return hash_table.storage[index]
 
