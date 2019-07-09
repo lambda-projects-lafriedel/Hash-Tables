@@ -58,15 +58,14 @@ def hash_table_insert(hash_table, key, value):
             prev, curr_item = curr_item, curr_item.next
         # if there's an item with a matching key
         if curr_item:
-            print("INSIDE IF", curr_item)
             # override the value with the passed in value
             curr_item.value = value
         else:
             # else, since it's None, set it as the list_node
             prev.next = list_node
 
-    for i in range(len(hash_table.storage)):
-        print(i, hash_table.storage[i])
+    # for i in range(len(hash_table.storage)):
+    #     print(i, hash_table.storage[i])
 
 
 # '''
@@ -75,10 +74,32 @@ def hash_table_insert(hash_table, key, value):
 # If you try to remove a value that isn't there, print a warning.
 # '''
 def hash_table_remove(hash_table, key):
-    pass
     # hash the key
+    index = hash(key, hash_table.capacity)
 
-    #
+    # grab the current item
+    curr_item = hash_table.storage[index]
+
+    # if it's none print a warning
+    if curr_item is None:
+        print("No items at this index")
+    # else while curr_item and curr_item.key is not passed in key
+    else:
+        while curr_item and curr_item.key is not key:
+            # set curr_item to curr_item.next
+            prev, curr_item = curr_item, curr_item.next
+            print("PREV", prev, "CURR ITEM", curr_item)
+        # if curr_item has a matching key
+            if curr_item:
+                print("PREV INSIDE IF", prev)
+                print("CURR_ITEM INSIDE IF", curr_item)
+                print("CURR ITEM NEXT INSIDE IF", curr_item.next)
+                prev.next = curr_item.next
+                # set it to none
+                print("PREV AFTER REASSIGNMENT", prev)
+            # else print warning?
+            else:
+                print("No item with that key, unable to remove")
 
 
 # '''
@@ -90,7 +111,7 @@ def hash_table_retrieve(hash_table, key):
     index = hash(key, hash_table.capacity)
 
     curr_item = hash_table.storage[index]
-
+    # print("CURR ITEM", index, curr_item)
     # if the item at that index is not None
     if curr_item is not None:
         # while there's an item and its key and the passed in key don't match
