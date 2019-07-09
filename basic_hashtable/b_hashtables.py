@@ -18,7 +18,6 @@ class BasicHashTable:
     def __init__(self, capacity):
         self.capacity = capacity
         self.storage = [None] * capacity
-        # Note from class: apparently we should have a count?
 
 
 # '''
