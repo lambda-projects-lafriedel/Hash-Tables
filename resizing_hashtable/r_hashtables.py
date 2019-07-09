@@ -56,14 +56,17 @@ def hash_table_insert(hash_table, key, value):
         while curr_item and curr_item.key is not key:
             # set prev as the curr_item and curr_item as its next item
             prev, curr_item = curr_item, curr_item.next
-        # if curr_item:
-        #     print("INSIDE IF", curr_item)
-        #     curr_item.value = value
-        # else:
-        prev.next = list_node
+        # if there's an item with a matching key
+        if curr_item:
+            print("INSIDE IF", curr_item)
+            # override the value with the passed in value
+            curr_item.value = value
+        else:
+            # else, since it's None, set it as the list_node
+            prev.next = list_node
 
-    # for i in range(len(hash_table.storage)):
-    #     print(i, hash_table.storage[i])
+    for i in range(len(hash_table.storage)):
+        print(i, hash_table.storage[i])
 
 
 # '''
@@ -73,6 +76,9 @@ def hash_table_insert(hash_table, key, value):
 # '''
 def hash_table_remove(hash_table, key):
     pass
+    # hash the key
+
+    #
 
 
 # '''
@@ -81,7 +87,6 @@ def hash_table_remove(hash_table, key):
 # Should return None if the key is not found.
 # '''
 def hash_table_retrieve(hash_table, key):
-    # hash the key
     index = hash(key, hash_table.capacity)
 
     curr_item = hash_table.storage[index]
