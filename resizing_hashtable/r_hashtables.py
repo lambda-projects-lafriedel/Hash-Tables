@@ -62,8 +62,8 @@ def hash_table_insert(hash_table, key, value):
         # else:
         prev.next = list_node
 
-    for i in range(len(hash_table.storage)):
-        print(i, hash_table.storage[i])
+    # for i in range(len(hash_table.storage)):
+    #     print(i, hash_table.storage[i])
 
 
 # '''
@@ -81,7 +81,23 @@ def hash_table_remove(hash_table, key):
 # Should return None if the key is not found.
 # '''
 def hash_table_retrieve(hash_table, key):
-    pass
+    # hash the key
+    index = hash(key, hash_table.capacity)
+
+    curr_item = hash_table.storage[index]
+
+    # if the item at that index is not None
+    if curr_item is not None:
+        # while there's an item and its key and the passed in key don't match
+        while curr_item and curr_item.key is not key:
+            # check if the item's key is equal to the passed in key
+            curr_item = curr_item.next
+        # if the keys are equal
+        if curr_item.key == key:
+            # return the value
+            return curr_item.value
+    # else return None
+    return None
 
 
 # '''
@@ -98,9 +114,9 @@ def Testing():
     hash_table_insert(ht, "line_2", "Filled beyond capacity")
     hash_table_insert(ht, "line_3", "Linked list saves the day!")
 
-    # print(hash_table_retrieve(ht, "line_1"))
-    # print(hash_table_retrieve(ht, "line_2"))
-    # print(hash_table_retrieve(ht, "line_3"))
+    print(hash_table_retrieve(ht, "line_1"))
+    print(hash_table_retrieve(ht, "line_2"))
+    print(hash_table_retrieve(ht, "line_3"))
 
     # old_capacity = len(ht.storage)
     # ht = hash_table_resize(ht)
