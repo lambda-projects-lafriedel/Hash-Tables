@@ -18,6 +18,7 @@ class BasicHashTable:
     def __init__(self, capacity):
         self.capacity = capacity
         self.storage = [None] * capacity
+        # Note from class: apparently we should have a count?
 
 
 # '''
@@ -26,16 +27,10 @@ class BasicHashTable:
 
 # '''
 def hash(string, max):
-    # not sure how/why to incorporate "max"
-    print("MAX", max)
     num = 5381
     for char in string:
         num = (num * 33) + ord(char)
     
-    # if num >= max:
-    #     print("Hashed key is out of range")
-    #     return None
-    # else:
     return num % max
 
 # '''
@@ -48,16 +43,21 @@ def hash_table_insert(hash_table, key, value):
     index = hash(key, hash_table.capacity)
     print("INDEX IN INSERT", index)
 
-    # create new Pair from index and value -- not sure how to utilize this properly?
-    pair = Pair(index, value)
+    # create new Pair from key and value -- not sure how to utilize this properly?
+    pair = Pair(key, value)
     print("PAIR", pair)
 
-    # if key already has a value, print a warning -- collision to be dealt with later
-    if hash_table.storage[pair.key] is not None:
-        print("WARNING: Value will be overridden!")
+    # Addition from class: need to grab stored pair, if it exists
+    stored_pair = hash_table.storage[index]
+
+    # if index already has a pair, print a warning -- collision to be dealt with later
+    if stored_pair is not None:
+        # Addition from class: Need to check if the pair's key is equal to the stored pair's key
+        if pair.key is not stored_pair.key:
+            print("WARNING: Value will be overridden!")
 
     # insert value at given index, even if existing value is not None
-    hash_table.storage[pair.key] = pair.value
+    hash_table.storage[pair.key] = pair
 
     # printing just to see process when running tests
     print("STORAGE IN INSERT")
