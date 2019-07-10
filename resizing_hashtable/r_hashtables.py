@@ -64,9 +64,6 @@ def hash_table_insert(hash_table, key, value):
             # else, since it's None, set it as the list_node
             prev.next = list_node
 
-    for i in range(len(hash_table.storage)):
-        print(i, hash_table.storage[i])
-
 
 # '''
 # Fill this in.
@@ -90,22 +87,6 @@ def hash_table_remove(hash_table, key):
             while curr_item.next is not None:
                 if curr_item.next.key == key:
                     curr_item.next = curr_item.next.next
-        # while curr_item and curr_item.key is not key:
-        #     # set curr_item to curr_item.next
-        #     prev, curr_item = curr_item, curr_item.next
-        #     print("PREV", prev, "CURR ITEM", curr_item)
-        # # if curr_item has a matching key
-        #     if curr_item:
-        #         print("PREV INSIDE IF", prev)
-        #         print("CURR_ITEM INSIDE IF", curr_item)
-        #         print("CURR ITEM NEXT INSIDE IF", curr_item.next)
-        #         prev.next = curr_item.next
-        #         # set it to none
-        #         print("PREV AFTER REASSIGNMENT", prev)
-        #     # else print warning?
-        #     else:
-        #         print("No item with that key, unable to remove")
-
 
 # '''
 # Fill this in.
@@ -135,27 +116,43 @@ def hash_table_retrieve(hash_table, key):
 # Fill this in
 # '''
 def hash_table_resize(hash_table):
-    pass
-    # need to rehash the keys of all the items
+    # double the capacity
+    new_table = HashTable(hash_table.capacity * 2)
+    # save the current storage in a temp variable
+    curr_storage = hash_table.storage
+    # for each index in the old storage, if the value at index is not none
+    for i in range(len(curr_storage)):
+        if curr_storage[i] is not None:
+            # for all LLpairs, rehash the key
+            if curr_storage[i].next is None:
+                #insert them to the new bigger hash table
+                hash_table_insert(new_table, curr_storage[i].key, curr_storage[i].value)
+            else:
+                curr_item = curr_storage[i]
+                while curr_item.next is not None:
+                    hash_table_insert(new_table, curr_item.key, curr_item.value)
+                    curr_item = curr_item.next
+    
+    return new_table
 
 
 def Testing():
     ht = HashTable(2)
 
-    hash_table_insert(ht, "line_1", "Tiny hash table")
-    hash_table_insert(ht, "line_2", "Filled beyond capacity")
-    hash_table_insert(ht, "line_3", "Linked list saves the day!")
+    # hash_table_insert(ht, "line_1", "Tiny hash table")
+    # hash_table_insert(ht, "line_2", "Filled beyond capacity")
+    # hash_table_insert(ht, "line_3", "Linked list saves the day!")
 
-    print(hash_table_retrieve(ht, "line_1"))
-    print(hash_table_retrieve(ht, "line_2"))
-    print(hash_table_retrieve(ht, "line_3"))
+    # print(hash_table_retrieve(ht, "line_1"))
+    # print(hash_table_retrieve(ht, "line_2"))
+    # print(hash_table_retrieve(ht, "line_3"))
 
-    # old_capacity = len(ht.storage)
-    # ht = hash_table_resize(ht)
-    # new_capacity = len(ht.storage)
+    old_capacity = len(ht.storage)
+    ht = hash_table_resize(ht)
+    new_capacity = len(ht.storage)
 
-    # print("Resized hash table from " + str(old_capacity)
-    #       + " to " + str(new_capacity) + ".")
+    print("Resized hash table from " + str(old_capacity)
+          + " to " + str(new_capacity) + ".")
 
 
 Testing()
