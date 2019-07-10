@@ -122,16 +122,12 @@ def hash_table_resize(hash_table):
     curr_storage = hash_table.storage
     # for each index in the old storage, if the value at index is not none
     for i in range(len(curr_storage)):
-        if curr_storage[i] is not None:
+        curr_item = curr_storage[i]
+        if curr_item is not None:
             # for all LLpairs, rehash the key
-            if curr_storage[i].next is None:
-                #insert them to the new bigger hash table
-                hash_table_insert(new_table, curr_storage[i].key, curr_storage[i].value)
-            else:
-                curr_item = curr_storage[i]
-                while curr_item.next is not None:
-                    hash_table_insert(new_table, curr_item.key, curr_item.value)
-                    curr_item = curr_item.next
+            while curr_item is not None:
+                hash_table_insert(new_table, curr_item.key, curr_item.value)
+                curr_item = curr_item.next
     
     return new_table
 
